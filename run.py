@@ -11,11 +11,3 @@ if __name__ == "__main__":
         port=8000,
         reload=True
     )
-
-
-# To quit existing server:  lsof -ti:8000 | xargs kill -9
-# Then run python run.py
-
-# First run python run.py
-# Then run the agents
-# Cuz this scripts starts the API endpoints
