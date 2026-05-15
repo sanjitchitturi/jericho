@@ -5,7 +5,6 @@ from env.state import EnvState
 
 router = APIRouter()
 
-# in-memory session store
 sessions: dict[str, DebugEnv] = {}
 
 class ResetRequest(BaseModel):
