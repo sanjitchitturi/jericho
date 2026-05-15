@@ -1,8 +1,8 @@
-name: jericho-debug-env
+name: jericho
 version: "1.0.0"
 description: >
   A code debugging environment where AI agents iteratively fix buggy Python
-  code by editing functions and running tests. Compatible with the OpenEnv spec.
+  code by editing functions and running tests.
 
 entrypoint: env.environment.DebugEnv
 
