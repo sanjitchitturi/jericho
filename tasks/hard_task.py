@@ -263,8 +263,6 @@ def _run_pipeline(raw=RAW):
     return emps
 
 
-# ── stage 1 ────────────────────────────────────────────────────────
-
 def test_stage1_a():
     emps = parse_employees(RAW)
     alice = next(e for e in emps if e["id"] == "E001")
@@ -278,8 +276,6 @@ def test_stage1_b():
     assert alice["overtime_hours"] == 20
     assert round(alice["hourly_rate"], 4) == round(90000.0 / 160, 4)
 
-
-# ── stage 2 ────────────────────────────────────────────────────────
 
 def test_stage2_a():
     emps = parse_employees(RAW)
@@ -297,8 +293,6 @@ def test_stage2_b():
     assert bob["tax_rate"] == 0.25, f"got {bob['tax_rate']}"
     assert bob["tax"] == round(45000 * 0.25, 2), f"got {bob['tax']}"
 
-
-# ── stage 3 ────────────────────────────────────────────────────────
 
 def test_stage3_a():
     emps = parse_employees(RAW)
@@ -318,8 +312,6 @@ def test_stage3_b():
     assert bob["bonus"] == round(45000 * 0.10, 2)
 
 
-# ── stage 4 ────────────────────────────────────────────────────────
-
 def test_stage4_a():
     emps = _run_pipeline()
     alice = next(e for e in emps if e["id"] == "E001")
@@ -335,9 +327,6 @@ def test_stage4_b():
     expected_net = round(dave["gross"] - dave["tax"], 2)
     assert dave["net"] == expected_net, f"got {dave['net']} expected {expected_net}"
 
-
-# ── stage 5 ────────────────────────────────────────────────────────
-
 def test_stage5_a():
     emps = _run_pipeline()
     slips = generate_payslips(emps)
@@ -345,6 +334,7 @@ def test_stage5_a():
     assert alice_slip["take_home"] == alice_slip["net"]
     assert "Alice Johnson" in alice_slip["summary"]
     assert "ENGINEERING" in alice_slip["summary"]
+
 
 def test_stage5_b():
     emps = _run_pipeline()
