@@ -1,21 +1,10 @@
-# Jericho – Debugging Environment
+# Jericho: Debugging Environment
 
 A lightweight OpenEnv-compatible RL environment where AI agents fix buggy Python code by interacting with a REST API.
 
 ## Overview
 
 Agents iteratively edit functions and run tests, receiving rewards based on improvements in correctness. Designed to simulate real-world debugging workflows across multiple difficulty levels.
-
-## Project Structure
-
-```
-api/         # FastAPI routes (env, tasks, grader, baseline)
-env/         # Core environment (state, executor, reward)
-tasks/       # Task definitions and registry
-run.py       # Starts the API server
-inference.py # Baseline inference script
-Dockerfile   # Container setup
-```
 
 ## Setup
 
