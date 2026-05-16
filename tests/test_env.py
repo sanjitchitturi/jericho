@@ -7,10 +7,6 @@ from tasks.registry import list_tasks
 
 env = DebugEnv()
 
-# ─────────────────────────────────────────
-# HELPERS
-# ─────────────────────────────────────────
-
 def print_state(state):
     print(f"  step        : {state.step_count}")
     print(f"  tests passed: {state.tests_passed} / {state.tests_total}")
@@ -23,20 +19,12 @@ def section(title):
     print(f"  {title}")
     print("="*50)
 
-# ─────────────────────────────────────────
-# TEST 1 — list tasks
-# ─────────────────────────────────────────
-
 section("TEST 1: list_tasks()")
 tasks = list_tasks()
 for t in tasks:
     print(f"  [{t['difficulty']}] {t['task_id']} — {t['description']}")
 assert len(tasks) == 3, "Should have 3 tasks"
 print("\n  PASSED")
-
-# ─────────────────────────────────────────
-# TEST 2 — reset loads buggy code
-# ─────────────────────────────────────────
 
 section("TEST 2: reset() loads buggy state")
 state = env.reset("easy")
@@ -48,10 +36,6 @@ print(f"  code loaded  : {repr(state.code[:40])}...")
 print(f"  tests_total  : {state.tests_total}")
 print("\n  PASSED")
 
-# ─────────────────────────────────────────
-# TEST 3 — run tests on buggy code
-# ─────────────────────────────────────────
-
 section("TEST 3: run_tests on buggy code → should fail")
 state, reward, done = env.step({"type": "run_tests"})
 print_state(state)
@@ -59,10 +43,6 @@ assert state.tests_passed < state.tests_total, "Buggy code should not pass all t
 assert reward < 0, f"Reward should be negative, got {reward}"
 print(f"  reward: {reward}")
 print("\n  PASSED")
-
-# ─────────────────────────────────────────
-# TEST 4 — edit_function then run tests
-# ─────────────────────────────────────────
 
 section("TEST 4: edit_function apply_discount fix → run tests")
 
@@ -83,10 +63,6 @@ state, reward, done = env.step({"type": "run_tests"})
 print_state(state)
 print(f"  reward: {reward}")
 print("\n  PASSED")
-
-# ─────────────────────────────────────────
-# TEST 5 — fix second function, all tests pass
-# ─────────────────────────────────────────
 
 section("TEST 5: edit_function compute_final fix → all tests pass")
 
@@ -110,10 +86,6 @@ assert done == True, "Episode should be done after all tests pass"
 print(f"  reward: {reward}")
 print("\n  PASSED")
 
-# ─────────────────────────────────────────
-# TEST 6 — state() returns current state
-# ─────────────────────────────────────────
-
 section("TEST 6: state() returns correct snapshot")
 snapshot = env.state()
 assert snapshot.done == True
@@ -122,10 +94,6 @@ print(f"  snapshot done        : {snapshot.done}")
 print(f"  snapshot tests_passed: {snapshot.tests_passed}")
 print("\n  PASSED")
 
-# ─────────────────────────────────────────
-# TEST 7 — step after done raises error
-# ─────────────────────────────────────────
-
 section("TEST 7: step() after done raises RuntimeError")
 try:
     env.step({"type": "run_tests"})
@@ -133,10 +101,6 @@ try:
 except RuntimeError as e:
     print(f"  caught expected error: {e}")
     print("\n  PASSED")
-
-# ─────────────────────────────────────────
-# TEST 8 — medium task loads and runs
-# ─────────────────────────────────────────
 
 section("TEST 8: medium task — reset and run buggy tests")
 state = env.reset("medium")
@@ -147,10 +111,6 @@ assert state.tests_passed < state.tests_total
 print(f"  reward: {reward}")
 print("\n  PASSED")
 
-# ─────────────────────────────────────────
-# TEST 9 — hard task loads and runs
-# ─────────────────────────────────────────
-
 section("TEST 9: hard task — reset and run buggy tests")
 state = env.reset("hard")
 assert state.tests_total == 10, f"Expected 10 tests for hard task, got {state.tests_total}"
@@ -159,10 +119,6 @@ print_state(state)
 assert state.tests_passed < state.tests_total
 print(f"  reward: {reward}")
 print("\n  PASSED")
-
-# ─────────────────────────────────────────
-# TEST 10 — step limit ends episode
-# ─────────────────────────────────────────
 
 section("TEST 10: step limit — episode ends at MAX_STEPS")
 state = env.reset("easy")
@@ -177,10 +133,6 @@ print(f"  episode ended after {steps} steps")
 print(f"  tests_passed: {state.tests_passed} / {state.tests_total}")
 print("\n  PASSED")
 
-# ─────────────────────────────────────────
-# TEST 11 — unknown action raises error
-# ─────────────────────────────────────────
-
 section("TEST 11: unknown action type raises ValueError")
 env.reset("easy")
 try:
@@ -189,9 +141,5 @@ try:
 except ValueError as e:
     print(f"  caught expected error: {e}")
     print("\n  PASSED")
-
-# ─────────────────────────────────────────
-# DONE
-# ─────────────────────────────────────────
 
 section("ALL TESTS PASSED")
