@@ -37,7 +37,6 @@ class DebugEnv:
         if self.current_state.done:
             raise RuntimeError("Episode is done. Call reset() to start a new one.")
 
-        # accept both Pydantic Action and raw dict for backwards compatibility
         if isinstance(action, dict):
             action = Action(**action)
 
@@ -69,8 +68,6 @@ class DebugEnv:
         if self.current_state is None:
             raise RuntimeError("Call reset() first.")
         return self._to_observation(self.current_state)
-
-    # ── internal helpers ───────────────────────────────────────────
 
     def _to_observation(self, state: EnvState) -> Observation:
         return Observation(
